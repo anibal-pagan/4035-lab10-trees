@@ -140,6 +140,7 @@ public class LinkedTree<E> extends AbstractTree<E> implements Cloneable {
 			other.addRoot(root().getElement()); 
 		    cloneSubtree(root(), other, other.root()); 
 		}
+		else return new LinkedTree<E>();
 		return other; 
 	}
 	
