@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import treeInterfaces.Position;
 
-public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
+public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> implements Cloneable{
     // class Node<E> is included at the end of this class
 	
 	private Node<E> root;   // the root of the tree
@@ -189,6 +189,30 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 		ntd.discard();          // or clean...
 		
 		return etr; 
+	}
+	
+	public LinkedBinaryTree<E> clone() throws CloneNotSupportedException { 
+		LinkedBinaryTree<E> other = new LinkedBinaryTree<>(); 
+		if (!isEmpty()) {
+			other.addRoot(root().getElement()); 
+		    cloneSubtree(root(), other, other.root()); 
+		}
+		else return new LinkedBinaryTree<E>();
+		return other; 
+	}
+	
+	private void cloneSubtree(Position<E> rThis, LinkedBinaryTree<E> other,
+			Position<E> rOther) {
+		for (Position<E> pThis : children(rThis)) {
+			Position<E> pOther;
+			if(this.left(rThis) == pThis) {
+				pOther = other.addLeft(rOther, pThis.getElement());
+			}
+			else {
+				pOther = other.addRight(rOther, pThis.getElement());
+			}
+			cloneSubtree(pThis, other, pOther); 
+		}
 	}
 
 	/**
